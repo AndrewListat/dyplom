@@ -4,7 +4,7 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
 
 $this->title = 'Login';
-$this->registerCssFile('/template_admin/assets/css/main');
+$this->registerCssFile('/template_admin/assets/css/main.css');
 ?>
 <div style="width: 100%">
     <div class="login-body">

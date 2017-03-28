@@ -23,9 +23,7 @@ $this->title = $model->name;
             'name',
             'address',
             'sex',
-            'age',
-            'created_at:date',
-            'updated_at:date',
+            'age'
         ],
     ]) ?>
 <div id="map" style="width: 100%; height: 500px;"></div>
@@ -53,29 +51,37 @@ echo "<script> var lat=".$model->coordinate_x."; var lng=".$model->coordinate_y.
             // Add the circle for this city to the map.
 
             $.get('/api/radius_vykydiv_all', function (data) {
-                console.log('data',data);
+
                 if (data) {
+                    console.log('data',data);
                     data.map(function(item){
+                        console.log('item',item);
                         var cityCircle = new google.maps.Circle({
                             strokeWeight: 0,
-                            fillColor: '#FF0000',
+                            fillColor: item[0].color,
                             fillOpacity: 0.15,
                             map: map,
-                            center: {lat: parseFloat(item.lat), lng: parseFloat(item.lng)},
-                            radius: item.radius
+                            center: {lat: parseFloat(item[0].lat), lng: parseFloat(item[0].lng)},
+                            radius: item[0].radius
                         });
                         var cityCircle = new google.maps.Circle({
                             strokeWeight: 0,
-                            fillColor: '#FF0000',
+                            fillColor: item[0].color,
                             fillOpacity: 0.15,
                             map: map,
-                            center: {lat: parseFloat(item.lat), lng: parseFloat(item.lng)},
-                            radius: item.radius_max
+                            center: {lat: parseFloat(item[0].lat), lng: parseFloat(item[0].lng)},
+                            radius: item[0].radius_max
                         });
                         var marker = new google.maps.Marker({
-                            position: {lat: parseFloat(item.lat), lng: parseFloat(item.lng)},
+                            position: {lat: parseFloat(item[0].lat), lng: parseFloat(item[0].lng)},
                             map: map,
-                            title: item.title
+                            title: item[0].title
+                        });
+                        var infowindow = new google.maps.InfoWindow({
+                            content: item[0].title
+                        });
+                        marker.addListener('click', function() {
+                            infowindow.open(map, marker);
                         });
                     })
                 

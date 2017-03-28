@@ -36,6 +36,7 @@ class Factory extends \yii\db\ActiveRecord
             [['name', 'address'], 'required'],
             [['user_id', 'created_at', 'updated_at'], 'integer'],
             [['name', 'address', 'coordinate_x', 'coordinate_y'], 'string', 'max' => 255],
+            ['coordinate_x', 'required', 'message' => 'Поставте маркер на карті'],
         ];
     }
 

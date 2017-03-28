@@ -38,6 +38,7 @@ class People extends \yii\db\ActiveRecord
             [['name', 'address'], 'required'],
             [['user_id', 'created_at', 'updated_at', 'age'], 'integer'],
             [['name', 'address', 'sex', 'coordinate_y','coordinate_x'], 'string', 'max' => 255],
+            ['coordinate_x', 'required', 'message' => 'Поставте маркер на карті'],
         ];
     }
 

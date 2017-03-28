@@ -68,6 +68,27 @@ echo $model->isNewRecord ?  "<script> var isCreate = true; var lat=49.3580116; v
             markers.push(markerT);
         }
 
+        var click_marker = null;
+        google.maps.event.addListener(map, 'click', function(event) {
+//            click_marker.setMap(null);
+            if (click_marker)
+                click_marker.setMap(null);
+            console.log('click_marker',click_marker)
+            placeMarker(event.latLng);
+        });
+
+        function placeMarker(location) {
+            console.log('location', location)
+            $("#people-coordinate_x").val(location.lat());
+            $("#people-coordinate_y").val(location.lng());
+            click_marker = new google.maps.Marker({
+                position: location,
+                map: map
+            });
+            markers=[];
+            markers.push(click_marker);
+        }
+
         // Create the search box and link it to the UI element.
         var input = document.getElementById('pac-input');
         var searchBox = new google.maps.places.SearchBox(input);
@@ -89,8 +110,8 @@ echo $model->isNewRecord ?  "<script> var isCreate = true; var lat=49.3580116; v
             console.log('lat',places[0].geometry.location.lat());
             console.log('lng',places[0].geometry.location.lng());
 
-            $("#people-coordinate_x").val(places[0].geometry.location.lat());
-            $("#people-coordinate_y").val(places[0].geometry.location.lng());
+//            $("#people-coordinate_x").val(places[0].geometry.location.lat());
+//            $("#people-coordinate_y").val(places[0].geometry.location.lng());
 
             markerT = null;
             if (places.length == 0) {

@@ -38,7 +38,7 @@ class PeopleController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new PeopleSearch();
+        $searchModel = new PeopleSearch(['user_id'=>Yii::$app->user->id]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -67,6 +67,7 @@ class PeopleController extends Controller
     public function actionCreate()
     {
         $model = new People();
+        $model->user_id = Yii::$app->user->id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);

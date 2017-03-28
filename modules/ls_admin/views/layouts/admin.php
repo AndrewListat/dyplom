@@ -67,7 +67,7 @@ MainAsset::register($this);
                             </a>
                         </li>
                          Tasks: style can be found in dropdown.less -->
-                        <li><a href="<?=Url::toRoute('default/logout');?>"><span class="glyphicon glyphicon-off" aria-hidden="true"></span> Выйти</a></li>
+                        <li><a href="<?=Url::toRoute('default/logout');?>"><span class="glyphicon glyphicon-off" aria-hidden="true"></span> Вийти</a></li>
 
                     </ul>
 

@@ -38,7 +38,7 @@ class FactoryController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new FactorySearch();
+        $searchModel = new FactorySearch(['user_id'=>Yii::$app->user->id]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -72,6 +72,11 @@ class FactoryController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $contamination->factory_id = $model->id;
             if ($contamination->load(Yii::$app->request->post()) && $contamination->save()) {
+                if (isset($_POST['from_date'])){
+                    $contamination->created_at =  strtotime($_POST['from_date']);
+                    $contamination->updated_at =   strtotime($_POST['from_date']);
+                    $contamination->save();
+                }
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
                 return $this->render('create', [
@@ -96,8 +101,21 @@ class FactoryController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $contamination = Contamination::findOne(['factory_id'=>$id]);
+        $contamination_old = Contamination::findOne(['factory_id'=>$id]);
+        $contamination = new Contamination();
+
+        $contamination->h = $contamination_old->h;
+        $contamination->C = $contamination_old->C;
+        $contamination->d = $contamination_old->d;
+        $contamination->T = $contamination_old->T;
+        $contamination->v = $contamination_old->v;
+        $contamination->factory_id = $id;
         if ($model->load(Yii::$app->request->post()) && $model->save() && $contamination->load(Yii::$app->request->post()) && $contamination->save()) {
+            if (isset($_POST['from_date'])){
+                $contamination->created_at =  strtotime($_POST['from_date']);
+                $contamination->updated_at =   strtotime($_POST['from_date']);
+                $contamination->save();
+            }
 
             return $this->redirect(['view', 'id' => $model->id]);
         } else {

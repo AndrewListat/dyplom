@@ -54,7 +54,11 @@ $this->title = $model->name;
                     ]) ?>
 
                 </div>
-                <div role="tabpanel" class="tab-pane" id="messages">...</div>
+                <div role="tabpanel" class="tab-pane" id="messages" onclick="hrafik_view(<?=$model->id?>)">
+                    <div class="chart">
+                        <canvas id="lineChart" style="height:250px"></canvas>
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -85,7 +89,7 @@ echo "<script> var lat=".$model->coordinate_x."; var lng=".$model->coordinate_y.
                     console.log(data)
                     var cityCircle = new google.maps.Circle({
                         strokeWeight: 0,
-                        fillColor: '#FF0000',
+                        fillColor: data[0].color,
                         fillOpacity: 0.15,
                         map: map,
                         center: {lat: parseFloat(data[0].lat), lng: parseFloat(data[0].lng)},
@@ -93,7 +97,7 @@ echo "<script> var lat=".$model->coordinate_x."; var lng=".$model->coordinate_y.
                     });
                     var cityCircle = new google.maps.Circle({
                         strokeWeight: 0,
-                        fillColor: '#FF0000',
+                        fillColor: data[0].color,
                         fillOpacity: 0.15,
                         map: map,
                         center: {lat: parseFloat(data[0].lat), lng: parseFloat(data[0].lng)},
@@ -102,11 +106,15 @@ echo "<script> var lat=".$model->coordinate_x."; var lng=".$model->coordinate_y.
                     var marker = new google.maps.Marker({
                         position: {lat: parseFloat(data[0].lat), lng: parseFloat(data[0].lng)},
                         map: map,
-                        title: data[0].title
                     });
-                }
+                    var infowindow = new google.maps.InfoWindow({
+                        content: data[0].title
+                    });
+                    infowindow.open(map, marker);
+                };
             });
     }
 
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCeaq3M7TgfGIj6FLt9cGYKjMwi2tjWlN4&callback=initMap"></script>
+

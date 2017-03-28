@@ -5,7 +5,7 @@ use yii\helpers\Url;
 
 $this->title = 'Register';
 $this->params['breadcrumbs'][] = $this->title;
-$this->registerCssFile('/template_admin/assets/css/main');
+$this->registerCssFile('/template_admin/assets/css/main.css');
 ?>
 
 <div class="login-body">
@@ -51,7 +51,7 @@ $this->registerCssFile('/template_admin/assets/css/main');
                     <br/>
                     <div class="form-group ">
                         <button type="submit" class="btn btn-lg btn-primary">Реєстрація</button>
-                        <a href="signip" class="btn btn-lg btn-primary">Вхід</a>
+                        <a href="signin" class="btn btn-lg btn-primary">Вхід</a>
                     </div>
                     <?php ActiveForm::end() ?>
                 </div>

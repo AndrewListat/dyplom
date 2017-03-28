@@ -13,6 +13,7 @@ use yii\behaviors\TimestampBehavior;
  * @property double $d
  * @property double $T
  * @property double $v
+ * @property double $C
  * @property integer $factory_id
  * @property integer $created_at
  * @property integer $updated_at
@@ -33,7 +34,8 @@ class Contamination extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['h', 'd', 'T', 'v'], 'number'],
+            [['h', 'd', 'T', 'v', 'C'], 'number'],
+            [['h', 'd', 'T', 'v', 'C'], 'required'],
             [['factory_id', 'created_at', 'updated_at'], 'integer'],
         ];
     }
@@ -45,20 +47,21 @@ class Contamination extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'h' => 'Висота труби',
-            'd' => 'Діаметер труби',
-            'T' => 'Температура',
-            'v' => 'Швидкість виходу викидів',
+            'h' => 'Висота труби (м)',
+            'd' => 'Діаметер труби (м)',
+            'T' => 'Температура (С)',
+            'v' => 'Швидкість виходу викидів (м/с)',
+            'C' => 'Концентрацію забруднюючої речовини',
             'factory_id' => 'Factory ID',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
     }
 
-    public function behaviors()
+    /*public function behaviors()
     {
         return [
             TimestampBehavior::className()
         ];
-    }
+    }*/
 }

@@ -24,6 +24,9 @@ class MainAsset extends AssetBundle
     public $js = [
         'template_admin/assets/js/app.min.js',
         'template_admin/assets/js/demo.js',
+        'template_admin/plugins/chartjs/Chart.min.js',
+        'template_admin/assets/js/hrafic.js',
+
     ];
     public $depends = [
         'yii\web\YiiAsset',

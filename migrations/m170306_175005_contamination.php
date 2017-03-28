@@ -13,6 +13,7 @@ class m170306_175005_contamination extends Migration
             'd' => Schema::TYPE_FLOAT,
             'T' => Schema::TYPE_FLOAT,
             'v' => Schema::TYPE_FLOAT,
+            'C' => Schema::TYPE_FLOAT,
             'factory_id' => Schema::TYPE_INTEGER,
             'created_at' => Schema::TYPE_INTEGER,
             'updated_at' => Schema::TYPE_INTEGER,

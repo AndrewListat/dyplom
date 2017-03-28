@@ -13,12 +13,24 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'coordinate_x')->hiddenInput()->label(false) ?>
-    <?= $form->field($model, 'coordinate_y')->hiddenInput()->label(false) ?>
     <?= $form->field($contamination, 'h'); ?>
     <?= $form->field($contamination, 'd'); ?>
     <?= $form->field($contamination, 'T'); ?>
     <?= $form->field($contamination, 'v'); ?>
+    <?= $form->field($contamination, 'C'); ?>
+
+    <?= $form->field($model, 'coordinate_x')->hiddenInput()->label(false) ?>
+    <?= $form->field($model, 'coordinate_y')->hiddenInput()->label(false) ?>
+
+    <?php
+    echo \kartik\date\DatePicker::widget([
+        'name'  => 'from_date',
+        'value' => date('d.m.Y'),
+        'pluginOptions' => [
+            'autoclose'=>true
+        ]
+    ]);
+    ?>
 
 
     <?= $form->field($model, 'address')->textInput(['style'=>"width: 80%; margin-top: 7px",'maxlength' => true, 'id'=>"pac-input", "placeholder"=>"Адреса підприемства"])->label(false) ?>
@@ -90,7 +102,26 @@ use yii\widgets\ActiveForm;
             searchBox.setBounds(map.getBounds());
         });
 
+        var click_marker = null;
+        google.maps.event.addListener(map, 'click', function(event) {
+//            click_marker.setMap(null);
+            if (click_marker)
+                click_marker.setMap(null);
+            console.log('click_marker',click_marker)
+            placeMarker(event.latLng);
+        });
 
+        function placeMarker(location) {
+            console.log('location', location)
+            $("#factory-coordinate_x").val(location.lat());
+            $("#factory-coordinate_y").val(location.lng());
+            click_marker = new google.maps.Marker({
+                position: location,
+                map: map
+            });
+            markers=[];
+            markers.push(click_marker);
+        }
 
         // [START region_getplaces]
         // Listen for the event fired when the user selects a prediction and retrieve
@@ -98,11 +129,8 @@ use yii\widgets\ActiveForm;
         searchBox.addListener('places_changed', function() {
             var places = searchBox.getPlaces();
 
-            console.log('lat',places[0].geometry.location.lat());
-            console.log('lng',places[0].geometry.location.lng());
-
-            $("#factory-coordinate_x").val(places[0].geometry.location.lat());
-            $("#factory-coordinate_y").val(places[0].geometry.location.lng());
+//            $("#factory-coordinate_x").val(places[0].geometry.location.lat());
+//            $("#factory-coordinate_y").val(places[0].geometry.location.lng());
 
             markerT = null;
             if (places.length == 0) {
